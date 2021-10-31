@@ -57,6 +57,12 @@ struct TextInput: View{
             TextField("Time", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/).padding()
             TextField("Nurse name", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/).padding()
             TextField("Additional notes", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/).padding()
+            Spacer()
+            Button(action: {}, label:{
+                Text("Submit")
+                    .font(.system(size: 20))
+                    .fontWeight(.regular)
+            })
         }
     }
 }
