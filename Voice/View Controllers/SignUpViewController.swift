@@ -67,7 +67,6 @@ class SignUpViewController: UIViewController {
             if (!positionSwitch.isOn) {
                 position = false;
             }
-        //    let occupation = if positionSwitch.isOn
             // Ceate the user
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
                 // Check for  errors
@@ -76,9 +75,19 @@ class SignUpViewController: UIViewController {
                     self.showError(message:"Error creating user")
                 }
                 else{
-                    // User was created successfully, now store the first+last name
+                    // User was created successfully
+//                    db.collection("users").addDocument(data: ["firstname":firstName,
+//                                                              "lastname":lastName,
+//                                                              "uid": result!.user.uid,
+//                                                              "Doctor":position]) {(error) in
+//                        if error != nil {
+//                            // Show error message
+//                            self.showError(message:"Error saving user data")
+//                        }
+//                    }
                     let db = Firestore.firestore()
-                    db.collection("users").addDocument(data: ["firstname":firstName,
+                    db.collection("users").document(result!.user.uid).setData(
+                                                            ["firstname":firstName,
                                                               "lastname":lastName,
                                                               "uid": result!.user.uid,
                                                               "Doctor":position]) {(error) in
@@ -87,7 +96,7 @@ class SignUpViewController: UIViewController {
                             self.showError(message:"Error saving user data")
                         }
                     }
-                    
+        
                     // Transition to home screen
                     self.transitionToHome()
                 }
@@ -105,22 +114,6 @@ class SignUpViewController: UIViewController {
             Constants.Storyboard.homeViewController) as?
             HomeViewController
         view.window?.rootViewController = homeViewController
-        view.window?.makeKeyAndVisible()
-    }
-    func transitionToDoctor(){
-        let doctorViewController =
-        storyboard?.instantiateViewController(withIdentifier:
-            Constants.Storyboard.doctorViewController) as?
-            DoctorViewController
-        view.window?.rootViewController = doctorViewController
-        view.window?.makeKeyAndVisible()
-    }
-    func transitionToNurse(){
-        let nurseViewCOntroller =
-        storyboard?.instantiateViewController(withIdentifier:
-            Constants.Storyboard.nurseViewController) as?
-            NurseViewController
-        view.window?.rootViewController = nurseViewCOntroller
         view.window?.makeKeyAndVisible()
     }
 

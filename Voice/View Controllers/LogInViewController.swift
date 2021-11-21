@@ -7,7 +7,7 @@
 
 import UIKit
 import FirebaseAuth
-import  FirebaseFirestore
+import FirebaseFirestore
 import grpc
 
 class LogInViewController: UIViewController {
@@ -38,24 +38,26 @@ class LogInViewController: UIViewController {
                 self.errorLabel.alpha=1
             }
             else{
+                // login success
                 let db = Firestore.firestore()
-                let docRef =  db.collection("users").document("ADzEpZMfCkUGcIVhXEqL")
-                docRef.getDocument {(document,error) in
-                    if let document = document, document.exists{
-                        let val=document.get("Doctor")
-                        print(val)
+                let docRef = db.collection("users").document(result!.user.uid)
+                docRef.getDocument{(document, error) in
+                    if let  document = document, document.exists {
+                        let dataDescription =  document.data()
+                        // might crash here
+                        if(dataDescription!["Doctor"] as! Int == 1){
+                            // transition to doctor
+                            self.transitionToDoctor()
+                        }
+                        else{
+                            // transition to nurse
+                            self.transitionToNurse()
+                        }
                     }
                     else{
-                        print("Document does not exist")
+                        print("Document doesn't exist")
                     }
                 }
-                // ignore this for now
-                let homeViewController =
-                self.storyboard?.instantiateViewController(withIdentifier:
-                    Constants.Storyboard.homeViewController) as?
-                    HomeViewController
-                self.view.window?.rootViewController = homeViewController
-                self.view.window?.makeKeyAndVisible()
             }
         }
     }
@@ -69,13 +71,21 @@ class LogInViewController: UIViewController {
         Utilities.styleFilledButton(loginButton)
     }
     
-    
+    func transitionToDoctor(){
+        let doctorViewController =
+        storyboard?.instantiateViewController(withIdentifier:
+            Constants.Storyboard.doctorViewController) as?
+            DoctorViewController
+        view.window?.rootViewController = doctorViewController
+        view.window?.makeKeyAndVisible()
+    }
+    func transitionToNurse(){
+        let nurseViewCOntroller =
+        storyboard?.instantiateViewController(withIdentifier:
+            Constants.Storyboard.nurseViewController) as?
+            NurseViewController
+        view.window?.rootViewController = nurseViewCOntroller
+        view.window?.makeKeyAndVisible()
+    }
 }
 
-
-//if(position==true){
-//    self.transitionToDoctor()
-//}
-//else{
-//    self.transitionToNurse()
-//}
