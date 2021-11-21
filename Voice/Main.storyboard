@@ -78,7 +78,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LRg-lu-ivP">
-                                <rect key="frame" x="40" y="84" width="334" height="370.5"/>
+                                <rect key="frame" x="40" y="84" width="334" height="457.5"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="FIrst Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y9S-Lr-I7n">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
@@ -100,8 +100,17 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you a doctor?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdS-Oa-Rur">
+                                        <rect key="frame" x="0.0" y="280" width="334" height="16"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Tz3-0I-dlK" userLabel="Doctor">
+                                        <rect key="frame" x="0.0" y="316" width="336" height="31"/>
+                                    </switch>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFd-1u-Mhv">
-                                        <rect key="frame" x="0.0" y="280" width="334" height="50"/>
+                                        <rect key="frame" x="0.0" y="367" width="334" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9DE-Pz-LZP"/>
                                         </constraints>
@@ -111,8 +120,8 @@
                                             <action selector="signUpTapped:" destination="a0Q-jj-BzD" eventType="touchUpInside" id="Eke-6M-F04"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8e-am-eQ9">
-                                        <rect key="frame" x="0.0" y="350" width="334" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8e-am-eQ9">
+                                        <rect key="frame" x="0.0" y="437" width="334" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
                                         <nil key="highlightedColor"/>
@@ -141,6 +150,7 @@
                         <outlet property="firstNameTextField" destination="Y9S-Lr-I7n" id="rPp-NE-cKy"/>
                         <outlet property="lastNameTextField" destination="A41-kr-NaM" id="8Hc-4a-o1n"/>
                         <outlet property="passwordTextField" destination="a0b-4I-gcQ" id="Mzc-oG-iLP"/>
+                        <outlet property="positionSwitch" destination="Tz3-0I-dlK" id="dLj-AS-NlK"/>
                         <outlet property="signUpButton" destination="KFd-1u-Mhv" id="bQf-7l-j3Q"/>
                     </connections>
                 </viewController>
@@ -151,7 +161,7 @@
         <!--HomeViewController-->
         <scene sceneID="OJS-Tz-RQl">
             <objects>
-                <viewController title="HomeViewController" id="wFl-4J-rwd" customClass="HomeViewController" customModule="Voice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" title="HomeViewController" id="wFl-4J-rwd" customClass="HomeViewController" customModule="Voice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qgV-pQ-9Et">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -170,7 +180,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00W-nt-tfH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2787" y="-95"/>
+            <point key="canvasLocation" x="4390" y="301"/>
+        </scene>
+        <!--Nurse View Controller-->
+        <scene sceneID="6Ek-7H-rWc">
+            <objects>
+                <viewController storyboardIdentifier="NurseVC" id="uLe-Bj-zRk" customClass="NurseViewController" customModule="Voice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vkd-22-EgI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="WFP-tP-mid"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uI7-gx-KAH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2690" y="502"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MT3-Qd-c06">
@@ -200,12 +225,12 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RJM-Zf-78Q">
                                 <rect key="frame" x="40" y="84" width="334" height="230.5"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V52-dO-C03">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V52-dO-C03">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9jL-bt-SdI">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9jL-bt-SdI">
                                         <rect key="frame" x="0.0" y="70" width="334" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -221,7 +246,7 @@
                                             <action selector="loginTapped:" destination="46z-uD-1oE" eventType="touchUpInside" id="dI6-Jp-JNj"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uo-1b-kMM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uo-1b-kMM">
                                         <rect key="frame" x="0.0" y="210" width="334" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="systemRedColor"/>
@@ -244,15 +269,30 @@
                     </view>
                     <navigationItem key="navigationItem" id="5Me-DV-Xru"/>
                     <connections>
+                        <outlet property="emailTextField" destination="V52-dO-C03" id="ouw-zv-LIy"/>
                         <outlet property="errorLabel" destination="2uo-1b-kMM" id="KjL-Qe-3lN"/>
-                        <outlet property="firstNameTextField" destination="V52-dO-C03" id="LkG-jK-nLY"/>
-                        <outlet property="lastNameTextField" destination="9jL-bt-SdI" id="vb9-bl-sSZ"/>
                         <outlet property="loginButton" destination="t4M-fj-F4E" id="sYp-9f-FNo"/>
+                        <outlet property="passwordTextField" destination="9jL-bt-SdI" id="jib-pS-lVp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZx-C8-8Rl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1709" y="431"/>
+        </scene>
+        <!--Doctor View Controller-->
+        <scene sceneID="GaC-Ew-uip">
+            <objects>
+                <viewController storyboardIdentifier="DoctorVC" id="T9d-0j-Ez0" customClass="DoctorViewController" customModule="Voice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PiS-cT-efA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="f3g-33-lpL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DNf-pY-hzO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2690" y="-135"/>
         </scene>
     </scenes>
     <resources>
