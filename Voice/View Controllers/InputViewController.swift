@@ -16,14 +16,16 @@ class InputViewController: UIViewController {
     @IBOutlet weak var medicine: UITextField!
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var nurse: UITextField!
-    @IBOutlet weak var time: UIDatePicker!
+    @IBOutlet weak var time: UITextField!
     @IBOutlet weak var done: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
     // nurse picker list setup
     var nurseList: Array<String> = []
     var pickerView = UIPickerView()
-
+    // date picker setup
+    let datePicker = UIDatePicker()
+    
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,39 +53,43 @@ class InputViewController: UIViewController {
         }
         else{
             // Store cleaned versions of the data
-            let db = Firestore.firestore()
             let patientText = patient.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let medicineText = medicine.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let amountText = amount.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let nurseText = nurse.text
-            // get nurseUID; will give inaccurate info if multiple people with the same first names, but worry about that later
-            var nurseUID: String = "placeholder"
-            
-            // not finding any matching documents here?
-            db.collection("users").whereField("firstname", isEqualTo: nurseText)
+            let first = nurseText?.components(separatedBy: " ")[0]
+            let last = nurseText?.components(separatedBy: " ")[1]
+            let timeText =  time.text
+            // get nurseUID to reference on nurse backend
+            let db = Firestore.firestore()
+            db.collection("users").whereField("firstname", isEqualTo: first!).whereField("lastname", isEqualTo: last!)
                 .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
                 }
                 else{
                     for document in querySnapshot!.documents {
-                        nurseUID =  document["uid"] as! String
+                        print(document["uid"]!)
+                        let nurseUID = document["uid"] as! String
+                        // Send data to firebase; set doc ID as assigned nurse to easily access from nurse's side of view
+                        db.collection("medical").addDocument(data: ["patient":patientText,
+                                                                    "medicine":medicineText,
+                                                                    "amount": amountText,
+                                                                    "nurse":nurseText!,
+                                                                    "nurseUID":nurseUID,
+                                                                    "time":timeText!,
+                                                                    "completed":false]) {(error) in
+                                    if error != nil {
+                                        // Show error message
+                                        self.showError(message:"Error saving user data")
+                                    }
+                                }
                     }
                 }
             }
-            // Send data to firebase; set doc ID as assigned nurse to easily access from nurse's side of view
-            db.collection("medical").document(nurseUID).setData(
-                                                            ["patient":patientText,
-                                                              "medicine":medicineText,
-                                                              "amount": amountText,
-                                                              "nurse":nurseText]) {(error) in
-                        if error != nil {
-                            // Show error message
-                            self.showError(message:"Error saving user data")
-                        }
-                    }
+            
             // Transition to home screen
-            self.transitionToHome()
+            self.transitionToDoctor()
             }
         }
         
@@ -107,25 +113,52 @@ class InputViewController: UIViewController {
                 }
                 else{
                     for document in querySnapshot!.documents {
-                        self.nurseList.append(document["firstname"] as! String)
+                        let firstname: String = document["firstname"] as! String
+                        let lastname: String = document["lastname"] as! String
+                        let name: String = firstname+" "+lastname
+                        self.nurseList.append(name)
                     }
                 }
         }
         pickerView.delegate = self
         pickerView.dataSource = self
+        createDatePicker()
     }
  
     func showError( message:String){
         errorLabel.text=message
         errorLabel.alpha=1
     }
-    func transitionToHome(){
-        let homeViewController =
+    // need to make transition back to menu
+    func transitionToDoctor(){
+        let doctorViewController =
         storyboard?.instantiateViewController(withIdentifier:
-            Constants.Storyboard.homeViewController) as?
-            HomeViewController
-        view.window?.rootViewController = homeViewController
+            Constants.Storyboard.doctorViewController) as?
+            DoctorViewController
+        view.window?.rootViewController = doctorViewController
         view.window?.makeKeyAndVisible()
+    }
+    func createDatePicker(){
+        // toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        // bar button
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
+        toolbar.setItems([doneBtn], animated:true)
+        // assign toolbar
+        time.inputAccessoryView = toolbar
+        // assign date picker to the text field
+        time.inputView  = datePicker
+        // date picker mode
+        datePicker.datePickerMode = .dateAndTime
+    }
+    @objc func  donePressed(){
+        // formatter
+        let formatter =  DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        time.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
     }
 
 }
